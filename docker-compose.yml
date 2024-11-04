@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    environment:
+      API_URL: http://api:3001
+    depends_on:
+      - api
+
+  api:
+    build: ./api
+    environment:
+      MOCK_RESPONSE: "Mock response from API"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"  # Expose port 80 for the reverse proxy
+    depends_on:
+      - web
+      - api
